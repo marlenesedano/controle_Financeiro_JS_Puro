@@ -1,3 +1,5 @@
+const transactionsUl = document.querySelector('#transactions')
+
 const dummyTransactions = [
   {id: 1, name: 'Bolo', amount: -20},
   {id: 2, name: 'Salario', amount: 300},
@@ -16,11 +18,18 @@ const addTransactionIntoDOM = transaction =>{
     ${transaction.name} <span> ${operator} R$ ${amountWithoutOperator} </span><button class = "delete-btn">x</button>
   `
   console.log(li);
-  /*
-  <li class="minus">
-          Salário <span>-$400</span><button class="delete-btn">x</button>
-        </li>
-*/
+  transactionsUl.prepend(li) // o metodo append inseri o elemento que ele recebeu como argumento
+}
+const updateBalanceValues = () => {
+  const transactionsAmounts = dummyTransactions.map(transaction => transaction.amount)
+  const total = transactionsAmounts.reduce((accumulator, transaction) => accumulator + transaction, 0).toFixed(2) // to fixed, informa a quantidade de decimais
+  console.log(total)
+  
+
 }
 
-addTransactionIntoDOM(dummyTransactions[0]);
+const init = () => {
+  dummyTransactions.forEach(addTransactionIntoDOM)
+  updateBalanceValues()
+}
+init()
