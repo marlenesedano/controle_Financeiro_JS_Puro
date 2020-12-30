@@ -14,7 +14,9 @@ let transactions = localStorage
 .getItem('transactions') !== null ? localStorageTransactions : []
 
 const removeTransaction = ID => {
-  transactions = transactions.filter(transaction => transaction.id !== ID)
+  transactions = transactions.filter(transaction => 
+    transaction.id !== ID)
+  updateLocalStorage()
   init()
 }
 
@@ -64,8 +66,13 @@ const init = () => {
   updateBalanceValues()
 }
 init()
-//gerar ids aleatorios
 
+const updateLocalStorage = () => {
+  localStorage.setItem('transactions', JSON.stringify(transactions))
+}
+
+
+//gerar ids aleatorios
 const generateID = () => Math.round(Math.random() * 1000)
 
 form.addEventListener('submit', event => {
@@ -85,6 +92,7 @@ form.addEventListener('submit', event => {
 
   transactions.push(transaction)
   init()
+  updateLocalStorage()
   inputTransactionName.value = ''
   inputTransactionAmount.value = ''
 
